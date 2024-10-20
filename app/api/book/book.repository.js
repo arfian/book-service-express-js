@@ -14,7 +14,22 @@ const selectById = async (id) => {
   }
 };
 
+const selectAll = async (limit, offset) => {
+  try {
+    const books = await Book.findAll({
+      limit: limit,
+      offset: offset,
+      order: ["title"],
+      raw: true,
+    });
+    return books;
+  } catch (error) {
+    throw new AppError(error);
+  }
+}
+
 const bookRepository = {
-  selectById
+  selectById,
+  selectAll
 };
 module.exports = bookRepository;

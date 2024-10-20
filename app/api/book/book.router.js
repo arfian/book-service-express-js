@@ -14,4 +14,5 @@ const { guardUser } = middleware.authentication;
  */
 module.exports = express
   .Router()
-  .get("/:id", guardUser, getId, getUserId, control(service.bookById));
+  .get("/:id", guardUser, getId, getUserId, control(service.bookById))
+  .get("/", guardUser, getBody, getUserId, control(service.books));
