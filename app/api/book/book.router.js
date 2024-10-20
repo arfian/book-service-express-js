@@ -15,4 +15,7 @@ const { guardUser } = middleware.authentication;
 module.exports = express
   .Router()
   .get("/:id", guardUser, getId, getUserId, control(service.bookById))
-  .get("/", guardUser, getBody, getUserId, control(service.books));
+  .get("/", guardUser, getBody, getUserId, control(service.books))
+  .post("/", guardUser, getBody, getUserId, control(service.bookCreate))
+  .put("/", guardUser, getBody, getUserId, control(service.bookUpdate))
+  .delete("/:id", guardUser, getId, getUserId, control(service.bookDelete));

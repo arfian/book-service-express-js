@@ -28,8 +28,51 @@ const selectAll = async (limit, offset) => {
   }
 }
 
+const create = async (bookData) => {
+  try {
+    const book = await Book.create(bookData);
+    return book;
+  } catch (error) {
+    throw new AppError(error);
+  }
+}
+
+const update = async (id, bookData) => {
+  try {
+    await Book.update(bookData, {
+      where: {
+        id: id
+      }
+    });
+    const book = await Book.findOne({
+      where: {
+        id,
+      },
+    });
+    return book.toJSON();
+  } catch (error) {
+    throw new AppError(error);
+  }
+}
+
+const deleteById = async (id) => {
+  try {
+    const book = await Book.destroy({
+      where: {
+        id: id
+      }
+    });
+    return book;
+  } catch (error) {
+    throw new AppError(error);
+  }
+}
+
 const bookRepository = {
   selectById,
-  selectAll
+  selectAll,
+  create,
+  update,
+  deleteById
 };
 module.exports = bookRepository;

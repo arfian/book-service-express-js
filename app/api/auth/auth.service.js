@@ -1,5 +1,6 @@
 const authRepository = require("../../config/memory/auth.memory");
 const AppError = require("../../config/error.config");
+const res = require("../../config/success.config");
 const { signUser, guardIsOwner, extractUserId } = require("../../config/authorization.config");
 
 /**
@@ -26,7 +27,7 @@ const readById = async (id, userId) => {
   const current = await authRepository.selectById(id);
   if (!current) throw new AppError(`User with id: ${id} not found `, "NOT_FOUND", "credentials.service.readById");
   guardIsOwner(userId, current, "credentials.service.readById");
-  return current;
+  return res.successRes(current);
 };
 
 /**
@@ -58,7 +59,8 @@ const readById = async (id, userId) => {
  */
 const register = async (user) => {
   await create(user);
-  return getUserToken(user);
+  const userData = getUserToken(user);
+  return res.successRes(userData);
 };
 
 /**
@@ -89,7 +91,8 @@ const register = async (user) => {
 const login = async (credentials) => {
   const user = await readByEmail(credentials.email);
   if (user && user.password === credentials.password) {
-    return getUserToken(user);
+    const userData = getUserToken(user);
+    return res.successRes(userData);
   }
   throw new AppError("Invalid credentials", "FORBIDDEN", "credentials.service.login");
 };
@@ -97,7 +100,8 @@ const login = async (credentials) => {
 const refresh = async (oldToken) => {
   const userId = extractUserId(oldToken);
   const user = await readById(userId);
-  return getUserToken(user);
+  const userData = getUserToken(user);
+  return res.successRes(userData);
 };
 
 /**
@@ -124,7 +128,8 @@ const deleteById = async (id, userId) => {
   const current = await authRepository.selectById(id);
   if (!current) return;
   guardIsOwner(userId, current, "credentials.service.deleteById");
-  return await authRepository.deleteById(id);
+  const userData = await authRepository.deleteById(id);
+  return res.successRes(userData);
 };
 
 const create = async (user) => {

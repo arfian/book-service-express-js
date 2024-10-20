@@ -35,7 +35,7 @@ const sendResponse = (res, appError) => {
   const statusCode = getStatusCode(appError.kind);
   res.status(statusCode).json({
     message: appError.message,
-    error: true,
+    success: false,
     appError
   });
 };
