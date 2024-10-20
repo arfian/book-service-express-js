@@ -33,7 +33,11 @@ const logError = (appError, req) => {
 const sendResponse = (res, appError) => {
   if (res.headersSent) return next(appError);
   const statusCode = getStatusCode(appError.kind);
-  res.status(statusCode).json(appError.message);
+  res.status(statusCode).json({
+    message: appError.message,
+    error: true,
+    appError
+  });
 };
 
 const getStatusCode = (kind) => {

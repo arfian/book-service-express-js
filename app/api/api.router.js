@@ -2,11 +2,11 @@ const express = require("express"),
   swaggerUi = require("swagger-ui-express");
 
 const authRouter = require("./auth/auth.router");
-// const bookRouter = require("./book/books.router");
+const bookRouter = require("./book/book.router");
 
 const middleware = require("../middleware/middleware.index");
 const swagger = require("../config/swagger.config");
-// const { guardUser } = middleware.authentication;
+const { guardUser } = middleware.authentication;
 const { debugReq } = middleware.logs;
 const { hashCredentials } = middleware.security;
 
@@ -25,7 +25,7 @@ const useRouters = (app) => {
 const getApiRouters = () => {
   const apiRouters = express.Router();
   apiRouters.use("/auth", hashCredentials, debugReq, authRouter);
-//   apiRouters.use("/book", guardUser, bookRouter);
+  apiRouters.use("/book", guardUser, bookRouter);
   return apiRouters;
 };
 

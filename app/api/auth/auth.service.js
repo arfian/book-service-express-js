@@ -100,6 +100,26 @@ const refresh = async (oldToken) => {
   return getUserToken(user);
 };
 
+/**
+ * @openapi
+ * /api/auth/{userId}:
+ *   delete:
+ *     description: Get User ID
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: header
+ *         name: x-api-key
+ *         type: string
+ *         required: true
+ *       - in: path
+ *         name: userId
+ *         type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: user data
+ */
 const deleteById = async (id, userId) => {
   const current = await authRepository.selectById(id);
   if (!current) return;
@@ -127,7 +147,7 @@ const getUserToken = (user) => {
   };
 };
 
-const credentialsService = {
+const authService = {
   register,
   refresh,
   login,
@@ -135,4 +155,4 @@ const credentialsService = {
   deleteById,
 };
 
-module.exports = credentialsService;
+module.exports = authService;
