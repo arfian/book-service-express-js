@@ -1,7 +1,7 @@
 {
-  "name": "skill-test-kindercastle",
+  "name": "book-service-express-js",
   "version": "1.0.0",
-  "description": "Node Express skill test",
+  "description": "Book Service Express JS",
   "repository": {
     "url": "https://github.com/arfian/skill-test-kindercastle"
   },
