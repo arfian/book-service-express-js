@@ -1,4 +1,4 @@
-# skill-test-kindercastle
+# Book Service Express JS
 
 ## migration
 https://sequelize.org/docs/v7/cli/
